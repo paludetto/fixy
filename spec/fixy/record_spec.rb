@@ -218,7 +218,7 @@ describe 'Generating a Record' do
     end
   end
 
-  context 'when the value proc raises and error' do
+  context 'when the value proc raises an error' do
     class PersonRecordWithError < Fixy::Record
       include Fixy::Formatter::Alphanumeric
       set_record_length 20
