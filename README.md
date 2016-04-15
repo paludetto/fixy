@@ -1,8 +1,6 @@
-[![Build Status](https://travis-ci.org/Chetane/fixy.svg?branch=master)](https://travis-ci.org/Chetane/fixy)
-
 ## fixy
 
-Library for generating fixed width flat file documents. 
+Library for generating fixed width flat file documents.
 
 ## Installation
 
@@ -10,7 +8,7 @@ Library for generating fixed width flat file documents.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'fixy'
+gem 'fixy', github: 'biva-sa/fixy'
 ```
 
 And then execute:
@@ -51,11 +49,11 @@ Below is an example of a record for defining a person's first and last name:
 class PersonRecord < Fixy::Record
 
 	# Include formatters
-	
+
   include Fixy::Formatter::Alphanumeric
 
 	# Define record length
-	
+
   set_record_length 20
 
   # Fields Declaration:
@@ -66,22 +64,22 @@ class PersonRecord < Fixy::Record
   field :first_name,     10,     '1-10' ,      :alphanumeric
   field :last_name ,     10,     '11-20',      :alphanumeric
 
-	# Any required data for the record can be 
+	# Any required data for the record can be
 	# provided through the initializer
-			
+
 	def initialize(first_name, last_name)
 	  @first_name = first_name
 	  @last_name  = last_name
 	end
-	
+
 	# Fields Definition:
-	# 1) Using a Proc 
-	
+	# 1) Using a Proc
+
   field_value :first_name, -> { @first_name }
 
-	# 2) Using a method definition. 
+	# 2) Using a method definition.
 	#    This is most interesting when complex logic is involved.
-  
+
   def last_name
     @last_name
   end
@@ -104,7 +102,7 @@ Given a record definition, you can generate a single line (e.g. for testing purp
 
 ```ruby
 PersonRecord.new('Sarah', 'Kerrigan').generate
-	
+
 # This will output the following 20 characters long record
 #
 #  "Sarah     Kerrigan  \n"
@@ -196,7 +194,7 @@ PeopleDocument.new.generate_to_file("output.html", true)
 
 Currently, there aren't many formatters included in this release, and you will most likely have to write your own. To create a new formatter of type `type` (e.g. amount), you simply need a method called `format_<type>(input, length)`. The argument `input` is the value being formatted, and `length` is the number of characters to fill. It is important to make sure `length` characters are returned by the formatter!
 
-An example for formatter definition: 
+An example for formatter definition:
 ```ruby
 
 module Fixy
@@ -222,4 +220,3 @@ end
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
-
