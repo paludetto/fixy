@@ -3,7 +3,6 @@ require 'spec_helper'
 describe Fixy::Formatter::UpcaseAscii do
   let(:proxy) do
     Class.new do
-      LINE_ENDING_CRLF = "\r\n"
       def line_ending; end
       include Fixy::Formatter::UpcaseAscii
     end.new
