@@ -16,7 +16,9 @@ describe Fixy::Formatter::Mask do
     expect(format[['???-99', '987654321'], 6]).to eq('987-65')
   end
 
-  it 'coerces nils' do
-    expect(format[['9-9', nil], 3]).to eq(' - ')
+  it 'coerces blank values' do
+    expect(format[['9-9', nil], 3]).to eq('   ')
+    expect(format[['??.???.??', ''], 9]).to eq('         ')
+    expect(format[['9.A?/?(A::9)', nil], 12]).to eq('            ')
   end
 end
