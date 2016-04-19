@@ -11,6 +11,7 @@ module Fixy
       #
 
       def format_ascii(input, bytes)
+        raise ArgumentError, 'Value is nil' if input.nil?
         format_alphanumeric(I18n.transliterate(input.to_s, replacement: '').gsub(/\s/, ' ').chomp, bytes)
       end
     end

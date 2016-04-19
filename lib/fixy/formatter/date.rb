@@ -10,6 +10,7 @@ module Fixy
       # Define `date_format` method to customize date format (default is %Y-%m-%d)
 
       def format_date(input, byte_width)
+        raise ArgumentError, 'Value is nil' if input.nil?
         return ' ' * byte_width unless input.respond_to? :strftime
 
         date_format_string = if respond_to? :date_format

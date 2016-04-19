@@ -9,6 +9,7 @@ module Fixy
       #
 
       def format_numeric(input, length)
+        raise ArgumentError, 'Value is nil' if input.nil?
         input = input.to_s
         raise ArgumentError, "Invalid Input (only digits are accepted) (input: #{input})" unless input =~ /^\d+$/
         raise ArgumentError, "Not enough length (input: #{input}, length: #{length})" if input.length > length

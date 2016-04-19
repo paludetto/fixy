@@ -11,6 +11,7 @@ module Fixy
       #
 
       def format_signed_amount(input, length)
+        raise ArgumentError, 'Value is nil' if input.nil?
         sign = input >= 0 ? '+' : '-'
         format_amount(input, length - 1) << sign
       end
