@@ -11,6 +11,7 @@ module Fixy
       #
 
       def format_upcase_alphanumeric(input, bytes)
+        raise ArgumentError, 'Value is nil' if input.nil?
         format_alphanumeric(input.to_s.upcase, bytes)
       end
     end

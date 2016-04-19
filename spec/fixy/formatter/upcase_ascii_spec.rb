@@ -13,7 +13,7 @@ describe Fixy::Formatter::UpcaseAscii do
     expect(format['Sir Charles', 11]).to eq('SIR CHARLES')
   end
 
-  it 'coerces nils' do
-    expect(format[nil, 3]).to eq('   ')
+  it 'rejects nils' do
+    expect { format[nil, 3] }.to raise_error ArgumentError
   end
 end

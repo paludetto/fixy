@@ -13,6 +13,7 @@ module Fixy
       #
 
       def format_sign(input, length)
+        raise ArgumentError, 'Value is nil' if input.nil?
         raise ArgumentError, "Invalid length for a sign, must be 1 (got #{length})" if length != 1
 
         if input.is_a?(String)

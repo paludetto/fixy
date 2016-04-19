@@ -14,6 +14,7 @@ module Fixy
       #
 
       def format_amount(input, length)
+        raise ArgumentError, 'Value is nil' if input.nil?
         value = (('%0' << length.to_s << 'd') % integerize(input.abs * 100))
 
         if value.length > length

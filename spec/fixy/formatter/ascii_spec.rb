@@ -14,7 +14,7 @@ describe Fixy::Formatter::Ascii do
     expect(format['Sïr Chårles', 11]).to eq('Sir Charles')
   end
 
-  it 'coerces nils' do
-    expect(format[nil, 3]).to eq('   ')
+  it 'rejects nils' do
+    expect { format[nil, 3] }.to raise_error ArgumentError
   end
 end

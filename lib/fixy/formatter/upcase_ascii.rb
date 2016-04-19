@@ -10,6 +10,7 @@ module Fixy
       #
 
       def format_upcase_ascii(input, bytes)
+        raise ArgumentError, 'Value is nil' if input.nil?
         format_ascii(input, bytes).upcase
       end
     end

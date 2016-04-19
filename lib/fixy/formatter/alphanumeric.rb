@@ -10,6 +10,7 @@ module Fixy
       #
 
       def format_alphanumeric(input, byte_width)
+        raise ArgumentError, 'Value is nil' if input.nil?
         input_string = String.new(input.to_s).tr "#{Fixy::Record::LINE_ENDING_CRLF}#{line_ending}", ''
         result = ''
 
