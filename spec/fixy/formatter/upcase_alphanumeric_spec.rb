@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe Fixy::Formatter::UpcaseAlphanumeric do
   let(:proxy) do
-    Class.new do
+    Class.new {
       def line_ending; end
       include Fixy::Formatter::UpcaseAlphanumeric
-    end.new
+    }.new
   end
   let(:format) { -> (input, bytes) { proxy.format_upcase_alphanumeric input, bytes } }
 

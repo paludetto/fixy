@@ -16,13 +16,14 @@ module Fixy
 
       def field(name, size, range, type)
         @record_fields ||= default_record_fields
-        range_matches = range.match /^(\d+)(?:-(\d+))?$/
+        range_matches = range.match(/^(\d+)(?:-(\d+))?$/)
 
         # Make sure inputs are valid, we rather fail early than behave unexpectedly later.
         raise ArgumentError, "Name '#{name}' is not a symbol"  unless name.is_a? Symbol
         raise ArgumentError, "Size '#{size}' is not a numeric" unless size.is_a?(Numeric) && size > 0
         raise ArgumentError, "Range '#{range}' is invalid"     unless range_matches
-        raise ArgumentError, "Unknown type '#{type}'"          unless (private_instance_methods + instance_methods).include? "format_#{type}".to_sym
+        raise ArgumentError, "Unknown type '#{type}'"          unless (private_instance_methods + instance_methods)
+                                                                      .include? "format_#{type}".to_sym
 
         # Validate the range is consistent with size
         range_from  = Integer(range_matches[1])
@@ -40,14 +41,13 @@ module Fixy
         end
 
         # We're good to go :)
-        @record_fields[range_from] = { name: name, from: range_from, to: range_to, size: size, type: type}
+        @record_fields[range_from] = { name: name, from: range_from, to: range_to, size: size, type: type }
 
         field_value(name, Proc.new) if block_given?
       end
 
       # Convenience method for creating field methods
       def field_value(name, value)
-
         # Make sure we're not overriding an existing method
         if (private_instance_methods + instance_methods).include?(name)
           raise ArgumentError, "Method '#{name}' is already defined, watch out for conflicts."
@@ -56,7 +56,7 @@ module Fixy
         if value.is_a? Proc
           define_method(name) do
             begin
-              self.instance_exec(&value)
+              instance_exec(&value)
             rescue => e
               raise e, "#{e.message} (field name: #{name})"
             end
@@ -66,9 +66,7 @@ module Fixy
         end
       end
 
-      def record_fields
-        @record_fields
-      end
+      attr_reader :record_fields
 
       def line_ending
         # Use the default line ending unless otherwise specified
@@ -85,7 +83,7 @@ module Fixy
 
       # Parse an existing record
       def parse(record, debug = false)
-        raise ArgumentError, 'Record must be a string'  unless record.is_a? String
+        raise ArgumentError, 'Record must be a string' unless record.is_a? String
 
         unless record.bytesize == record_length
           raise ArgumentError, "Record length is invalid (Expected #{record_length})"
@@ -98,7 +96,7 @@ module Fixy
         current_record = 1
 
         byte_record = record.bytes.to_a
-        while current_position <= record_length do
+        while current_position <= record_length
 
           field = record_fields[current_position]
           raise StandardError, "Undefined field for position #{current_position}" unless field
@@ -131,7 +129,7 @@ module Fixy
       current_position = 1
       current_record = 1
 
-      while current_position <= self.class.record_length do
+      while current_position <= self.class.record_length
 
         field = record_fields[current_position]
         raise StandardError, "Undefined field for position #{current_position}" unless field
@@ -140,7 +138,12 @@ module Fixy
         method          = field[:name]
         value           = send(method)
         formatted_value = format_value(value, field[:size], field[:type])
-        formatted_value = decorator.field(formatted_value, current_record, current_position, method, field[:size], field[:type])
+        formatted_value = decorator.field(formatted_value,
+                                          current_record,
+                                          current_position,
+                                          method,
+                                          field[:size],
+                                          field[:type])
 
         output << formatted_value
         current_position = field[:to] + 1

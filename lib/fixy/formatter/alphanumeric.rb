@@ -1,7 +1,6 @@
 module Fixy
   module Formatter
     module Alphanumeric
-
       #
       # Alphanumeric Formatter
       #
@@ -18,11 +17,8 @@ module Fixy
           result << input_string
         else
           input_string.each_char do |char|
-            if result.bytesize + char.bytesize <= byte_width
-              result << char
-            else
-              break
-            end
+            break if result.bytesize + char.bytesize > byte_width
+            result << char
           end
         end
 

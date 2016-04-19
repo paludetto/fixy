@@ -17,7 +17,8 @@ module Fixy
         raise ArgumentError, "Invalid length for a sign, must be 1 (got #{length})" if length != 1
 
         if input.is_a?(String)
-          raise ArgumentError, "Invalid input, expected '+' or '-' but got #{input}" unless [SIGN_PLUS, SIGN_MINUS].include?(input)
+          raise ArgumentError, "Invalid input, expected '+' or '-' but got #{input}" unless [SIGN_PLUS, SIGN_MINUS]
+                                                                                            .include?(input)
           input
         else
           input < 0 ? SIGN_MINUS : SIGN_PLUS

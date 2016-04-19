@@ -6,7 +6,7 @@ module Fixy
           document
         end
 
-        def field(value, record_number, position, method, length, type)
+        def field(value, _record_number, _position, _method, _length, _type)
           value
         end
 

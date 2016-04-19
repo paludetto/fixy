@@ -13,8 +13,8 @@ describe 'Defining a Document' do
     class IdentityRecord < Fixy::Record
       set_record_length 20
       include Fixy::Formatter::Alphanumeric
-      field :first_name, 10, '1-10' , :alphanumeric
-      field :last_name , 10, '11-20', :alphanumeric
+      field :first_name, 10, '1-10', :alphanumeric
+      field :last_name, 10, '11-20', :alphanumeric
 
       def initialize(first_name, last_name)
         @first_name = first_name
@@ -22,7 +22,7 @@ describe 'Defining a Document' do
       end
 
       field_value :first_name, -> { @first_name }
-      field_value :last_name , -> { @last_name  }
+      field_value :last_name, -> { @last_name }
     end
 
     class PeopleDocument < Fixy::Document

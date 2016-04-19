@@ -2,14 +2,14 @@ require 'spec_helper'
 
 describe Fixy::Formatter::Date do
   let(:proxy) do
-    Class.new do
+    Class.new {
       def line_ending; end
 
       def date_format
         '%d / %m / %Y'
       end
       include Fixy::Formatter::Date
-    end.new
+    }.new
   end
 
   let(:format) { -> (input, bytes) { proxy.format_date input, bytes } }
