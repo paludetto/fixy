@@ -17,8 +17,12 @@ describe Fixy::Formatter::Mask do
   end
 
   it 'coerces blank values' do
-    expect(format[['9-9', nil], 3]).to eq('   ')
+    expect(format[['9-9', ''], 3]).to eq('   ')
     expect(format[['??.???.??', ''], 9]).to eq('         ')
-    expect(format[['9.A?/?(A::9)', nil], 12]).to eq('            ')
+    expect(format[['9.A?/?(A::9)', ''], 12]).to eq('            ')
+  end
+
+  it 'reject nil values' do
+    expect { format[['9.A?/?(A::9)', nil], 12] }.to raise_error ArgumentError
   end
 end

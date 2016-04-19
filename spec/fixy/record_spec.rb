@@ -104,7 +104,7 @@ describe 'Generating a Record' do
   end
 
   context 'when a field value is nil' do
-    it 'should emit spaces' do
+    it 'should raise error' do
       class PersonRecordNil < Fixy::Record
         include Fixy::Formatter::Alphanumeric
 
@@ -115,8 +115,7 @@ describe 'Generating a Record' do
         field_value :name, -> { nil }
       end
 
-      value = PersonRecordNil.new.generate
-      value.should == "         \n"
+      expect { PersonRecordNil.new.generate }.to raise_error ArgumentError
     end
   end
 

@@ -19,8 +19,11 @@ describe Fixy::Formatter::Date do
   end
 
   it 'coerces non-date values' do
-    expect(format[nil, 14]).to eq('              ')
     expect(format['wtf', 9]).to eq('         ')
     expect(format[413, 12]).to eq('            ')
+  end
+
+  it 'rejects nil values' do
+    expect { format[nil, 14] }.to raise_error ArgumentError
   end
 end
