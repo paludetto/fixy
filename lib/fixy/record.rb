@@ -16,13 +16,14 @@ module Fixy
 
       def field(name, size, range, type)
         @record_fields ||= default_record_fields
-        range_matches = range.match /^(\d+)(?:-(\d+))?$/
+        range_matches = range.match(/^(\d+)(?:-(\d+))?$/)
 
         # Make sure inputs are valid, we rather fail early than behave unexpectedly later.
         raise ArgumentError, "Name '#{name}' is not a symbol"  unless name.is_a? Symbol
         raise ArgumentError, "Size '#{size}' is not a numeric" unless size.is_a?(Numeric) && size > 0
         raise ArgumentError, "Range '#{range}' is invalid"     unless range_matches
-        raise ArgumentError, "Unknown type '#{type}'"          unless (private_instance_methods + instance_methods).include? "format_#{type}".to_sym
+        raise ArgumentError, "Unknown type '#{type}'"          unless (private_instance_methods + instance_methods)
+                                                                      .include? "format_#{type}".to_sym
 
         # Validate the range is consistent with size
         range_from  = Integer(range_matches[1])
@@ -137,7 +138,12 @@ module Fixy
         method          = field[:name]
         value           = send(method)
         formatted_value = format_value(value, field[:size], field[:type])
-        formatted_value = decorator.field(formatted_value, current_record, current_position, method, field[:size], field[:type])
+        formatted_value = decorator.field(formatted_value,
+                                          current_record,
+                                          current_position,
+                                          method,
+                                          field[:size],
+                                          field[:type])
 
         output << formatted_value
         current_position = field[:to] + 1
