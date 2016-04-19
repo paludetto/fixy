@@ -18,7 +18,7 @@ module Fixy
         value = (('%0' << length.to_s << 'd') % integerize(input.abs * 100))
 
         if value.length > length
-          raise ArgumentError, "Insufficient length for provided amount (input: #{input.to_s}, length: #{length}, required length: #{value.length})"
+          raise ArgumentError, "Insufficient length for provided amount (input: #{input}, length: #{length}, required length: #{value.length})"
         else
           value
         end

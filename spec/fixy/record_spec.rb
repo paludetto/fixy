@@ -12,10 +12,10 @@ describe 'Defining a Record' do
 
           set_line_ending Fixy::Record::LINE_ENDING_CRLF
 
-          field :first_name, 10, '1-10' , :alphanumeric
-          field :last_name , 10, '11-20', :alphanumeric
+          field :first_name, 10, '1-10', :alphanumeric
+          field :last_name, 10, '11-20', :alphanumeric
         end
-      }.not_to raise_error()
+      }.not_to raise_error
     end
   end
 
@@ -34,25 +34,25 @@ describe 'Defining a Record' do
           set_record_length 20
           field :first_name, 2, '1-10', :alphanumeric
         end
-      }.to raise_error(ArgumentError, "Invalid Range (size: 2, range: 1-10)")
+      }.to raise_error(ArgumentError, 'Invalid Range (size: 2, range: 1-10)')
 
       expect {
         class PersonRecordC < Fixy::Record
           include Fixy::Formatter::Alphanumeric
           set_record_length 20
           field :first_name, 10, '1-10', :alphanumeric
-          field :last_name , 10, '10-19', :alphanumeric
+          field :last_name, 10, '10-19', :alphanumeric
         end
-      }.to raise_error(ArgumentError, "Column 1 has already been allocated")
+      }.to raise_error(ArgumentError, 'Column 1 has already been allocated')
 
       expect {
         class PersonRecordD < Fixy::Record
           include Fixy::Formatter::Alphanumeric
           set_record_length 10
           field :first_name, 10, '1-10', :alphanumeric
-          field :last_name , 10, '11-20', :alphanumeric
+          field :last_name, 10, '11-20', :alphanumeric
         end
-      }.to raise_error(ArgumentError, "Invalid Range (> 10)")
+      }.to raise_error(ArgumentError, 'Invalid Range (> 10)')
     end
   end
 end
@@ -64,8 +64,8 @@ describe 'Generating a Record' do
 
       set_record_length 20
 
-      field :first_name, 10, '1-10' , :alphanumeric
-      field :last_name , 10, '11-20', :alphanumeric
+      field :first_name, 10, '1-10', :alphanumeric
+      field :last_name, 10, '11-20', :alphanumeric
 
       field_value :first_name, -> { 'Sarah' }
 
@@ -92,7 +92,7 @@ describe 'Generating a Record' do
 
         set_record_length 9
 
-        field :name, 9, '1-9' , :alphanumeric
+        field :name, 9, '1-9', :alphanumeric
 
         field_value :name, -> { "12345678И" }
       end
@@ -110,7 +110,7 @@ describe 'Generating a Record' do
 
         set_record_length 9
 
-        field :name, 9, '1-9' , :alphanumeric
+        field :name, 9, '1-9', :alphanumeric
 
         field_value :name, -> { nil }
       end
@@ -126,7 +126,7 @@ describe 'Generating a Record' do
 
         set_record_length 9
 
-        field :name, 9, '1-9' , :alphanumeric
+        field :name, 9, '1-9', :alphanumeric
 
         field_value :name, -> { "Two\nLine" }
       end
@@ -141,15 +141,15 @@ describe 'Generating a Record' do
       class PersonRecordF < Fixy::Record
         include Fixy::Formatter::Alphanumeric
         set_record_length 20
-        field :first_name, 10, '1-10' , :alphanumeric
-        field :last_name , 8,  '11-18', :alphanumeric
+        field :first_name, 10, '1-10', :alphanumeric
+        field :last_name, 8, '11-18', :alphanumeric
         field_value :first_name, -> { 'Sarah' }
         field_value :last_name,  -> { 'Kerrigan' }
       end
 
       expect {
         PersonRecordF.new.generate
-      }.to raise_error(StandardError, "Undefined field for position 19")
+      }.to raise_error(StandardError, 'Undefined field for position 19')
     end
   end
 
@@ -158,15 +158,15 @@ describe 'Generating a Record' do
       include Fixy::Formatter::Alphanumeric
       set_record_length 20
 
-      field :first_name, 10, '1-10' , :alphanumeric
+      field :first_name, 10, '1-10', :alphanumeric
       field_value :first_name, -> { 'Bob' }
     end
 
     class PersonRecordH < PersonRecordG
       include Fixy::Formatter::Alphanumeric
       set_record_length 20
-      field :last_name , 10,  '11-20', :alphanumeric
-      field_value :last_name,  -> { 'Williams' }
+      field :last_name, 10, '11-20', :alphanumeric
+      field_value :last_name, -> { 'Williams' }
     end
 
     it 'should include fields from the superclass' do
@@ -178,8 +178,8 @@ describe 'Generating a Record' do
       class PersonRecordI < PersonRecordG
         include Fixy::Formatter::Alphanumeric
         set_record_length 20
-        field :last_name , 10,  '11-20', :alphanumeric
-        field_value :last_name,  -> { 'Jacobs' }
+        field :last_name, 10, '11-20', :alphanumeric
+        field_value :last_name, -> { 'Jacobs' }
       end
 
       it 'does not collide' do
@@ -196,7 +196,7 @@ describe 'Generating a Record' do
     class PersonRecordJ < Fixy::Record
       include Fixy::Formatter::Alphanumeric
       set_record_length 20
-      field(:description , 20, '1-20', :alphanumeric) { 'Use My Value' }
+      field(:description, 20, '1-20', :alphanumeric) { 'Use My Value' }
     end
 
     it 'uses the proc conversion as the field value' do
@@ -209,7 +209,7 @@ describe 'Generating a Record' do
       include Fixy::Formatter::Alphanumeric
       set_record_length 20
       set_line_ending Fixy::Record::LINE_ENDING_CRLF
-      field(:description , 20, '1-20', :alphanumeric) { 'Use My Value' }
+      field(:description, 20, '1-20', :alphanumeric) { 'Use My Value' }
     end
 
     it 'uses the given line ending' do
@@ -222,7 +222,7 @@ describe 'Generating a Record' do
       include Fixy::Formatter::Alphanumeric
       set_record_length 20
       set_line_ending Fixy::Record::LINE_ENDING_CRLF
-      field(:description , 20, '1-20', :alphanumeric) { non_existant_var }
+      field(:description, 20, '1-20', :alphanumeric) { non_existant_var }
     end
     it 'includes the field name in the error message' do
       expect { PersonRecordWithError.new.generate }.to raise_error(NameError, /field name: description/)
@@ -234,13 +234,11 @@ describe 'Parsing a record' do
   let(:multibyte_record) { 'älimuk   Karil     ' }
   context 'with a record of multi-byte characters' do
     it 'should not raise with the right number of bytes' do
-      PersonRecordE.parse(multibyte_record, true).should eq({
-        record: File.read('spec/fixtures/debug_parsed_multibyte_record.txt'),
-      fields: [
-        { name: :first_name, value: 'älimuk   '},
-        { name: :last_name,  value: 'Karil     '}
-      ]
-      })
+      PersonRecordE.parse(multibyte_record, true).should eq(record: File.read('spec/fixtures/debug_parsed_multibyte_record.txt'),
+                                                            fields: [
+                                                              { name: :first_name, value: 'älimuk   ' },
+                                                              { name: :last_name, value: 'Karil     ' }
+                                                            ])
     end
 
     it 'should not raise with the right amount' do
@@ -251,26 +249,24 @@ describe 'Parsing a record' do
   end
 
   context 'with custom line endings' do
-    let(:record) { "Use My Value        " }
+    let(:record) { 'Use My Value        ' }
     it 'should generate fixed width record' do
-      PersonRecordWithLineEnding.parse(record).should eq({
-        record: (record + Fixy::Record::LINE_ENDING_CRLF),
-        fields: [
-          { name: :description,  value: 'Use My Value        '}
-        ]
-      })
+      PersonRecordWithLineEnding.parse(record).should eq(record: (record + Fixy::Record::LINE_ENDING_CRLF),
+                                                         fields: [
+                                                           { name: :description, value: 'Use My Value        ' }
+                                                         ])
     end
   end
 
   context 'when properly defined' do
-    let(:record) { "Sarah     Kerrigan  " }
+    let(:record) { 'Sarah     Kerrigan  ' }
     class PersonRecordK < Fixy::Record
       include Fixy::Formatter::Alphanumeric
 
       set_record_length 20
 
-      field :first_name, 10, '1-10' , :alphanumeric
-      field :last_name , 10, '11-20', :alphanumeric
+      field :first_name, 10, '1-10', :alphanumeric
+      field :last_name, 10, '11-20', :alphanumeric
 
       field_value :first_name, -> { 'Sarah' }
 
@@ -280,24 +276,20 @@ describe 'Parsing a record' do
     end
 
     it 'should generate fixed width record' do
-      PersonRecordE.parse(record).should eq({
-        record: (record + "\n"),
-        fields: [
-          { name: :first_name, value: 'Sarah     '},
-          { name: :last_name,  value: 'Kerrigan  '}
-        ]
-      })
+      PersonRecordE.parse(record).should eq(record: (record + "\n"),
+                                            fields: [
+                                              { name: :first_name, value: 'Sarah     ' },
+                                              { name: :last_name, value: 'Kerrigan  ' }
+                                            ])
     end
 
     context 'when using the debug flag' do
       it 'should produce a debug log' do
-        PersonRecordE.parse(record, true).should eq({
-          record: File.read('spec/fixtures/debug_parsed_record.txt'),
-          fields: [
-            { name: :first_name, value: 'Sarah     '},
-            { name: :last_name,  value: 'Kerrigan  '}
-          ]
-        })
+        PersonRecordE.parse(record, true).should eq(record: File.read('spec/fixtures/debug_parsed_record.txt'),
+                                                    fields: [
+                                                      { name: :first_name, value: 'Sarah     ' },
+                                                      { name: :last_name, value: 'Kerrigan  ' }
+                                                    ])
       end
     end
 
@@ -325,15 +317,15 @@ describe 'Parsing a record' do
       class PersonRecordL < Fixy::Record
         include Fixy::Formatter::Alphanumeric
         set_record_length 20
-        field :first_name, 10, '1-10' , :alphanumeric
-        field :last_name , 8,  '11-18', :alphanumeric
+        field :first_name, 10, '1-10', :alphanumeric
+        field :last_name, 8, '11-18', :alphanumeric
         field_value :first_name, -> { 'Sarah' }
         field_value :last_name,  -> { 'Kerrigan' }
       end
 
       expect {
         PersonRecordL.parse(' ' * 20)
-      }.to raise_error(StandardError, "Undefined field for position 19")
+      }.to raise_error(StandardError, 'Undefined field for position 19')
     end
   end
 end

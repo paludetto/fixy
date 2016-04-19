@@ -24,7 +24,7 @@ module Fixy
 
         input_chars = input_string.chars
 
-        mask.gsub(/[9A?]/) { |_char|  input_chars.shift || ' ' }
+        mask.gsub(/[9A?]/) { |_char| input_chars.shift || ' ' }
       end
     end
   end

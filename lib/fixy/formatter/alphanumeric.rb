@@ -1,7 +1,6 @@
 module Fixy
   module Formatter
     module Alphanumeric
-
       #
       # Alphanumeric Formatter
       #

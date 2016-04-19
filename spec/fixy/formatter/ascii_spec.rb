@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe Fixy::Formatter::Ascii do
   let(:proxy) do
-    Class.new do
+    Class.new {
       def line_ending; end
       include Fixy::Formatter::Ascii
-    end.new
+    }.new
   end
 
   let(:format) { -> (input, bytes) { proxy.format_ascii input, bytes } }

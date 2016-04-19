@@ -1,6 +1,5 @@
 module Fixy
   class Document
-
     attr_accessor :content, :debug_mode
 
     def generate_to_file(path, debug = false)
