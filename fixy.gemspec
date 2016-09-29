@@ -20,6 +20,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'pry-byebug'
 
-  spec.add_runtime_dependency 'rake', '~> 10.4.2'
+  spec.add_runtime_dependency 'rake', '>= 10.4.2'
   spec.add_runtime_dependency 'i18n'
 end
